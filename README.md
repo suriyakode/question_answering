@@ -35,7 +35,7 @@ Usage: I ran this on a fresh Ubuntu16.04 instance with a P5000 GPU through paper
 	 # if train_cache exists it will load from there, else it will save there
 	 # will create <SAVE_MODEL_DIR> 
 	 
-	sudo python3.7 train <SAVE_MODEL_DIR> <train_cache_file>
+	sudo python3.7 QA.py train <SAVE_MODEL_DIR> <train_cache_file>
 	```
 6) calculate predictions
 	
@@ -43,7 +43,7 @@ Usage: I ran this on a fresh Ubuntu16.04 instance with a P5000 GPU through paper
 	# if eval_cache exists it will load from there, else it will save there
 	# expects <LOAD_MODEL_DIR> to exist 
 	
-	sudo python3.7 eval <LOAD_MODEL_DIR> <eval_cache_file>
+	sudo python3.7 QA.py eval <LOAD_MODEL_DIR> <eval_cache_file>
 	```
 7) score
 	
@@ -58,7 +58,7 @@ Hello Cortx team! I wanted to start off by thanking you for this exciting projec
 Design : 
 I originally found the BertForQuestionAnswering model and decided to work with that. Unfortunately, I could never load a Bert model onto my GPU for training as it would immeadiately complain about memory usage. I found this odd, as the model shouldn't take up the 16GB of GPU space. Luckily I found the DistilBertForQuestionAnswering model, which boasted similar results to Bert while being light-weight. 
 
-For my final model, I chose to modify the source code of DBFQA. I noticed that DBFQA was essentially a wrapper for DB with an extra linear layer from the last hidden outputs to identify the span start and end. I copied the source code and added another linear layer to identify the question type. I chose to get the input for the question type layer from the SECOND to last hidden layer, as I read this would interfer less with the span prediction. I also inluded the question type prediction in loss calculations. I chose only 4 possible question types: "YES, "NO", "SHORT ANSWER" and "LONG ANSWER".
+For my final model, I chose to modify the source code of DBFQA. I noticed that DBFQA was essentially a wrapper for DB with an extra linear layer from the last hidden outputs to identify the span start and end. I copied the source code and added another linear layer to identify the question type. I chose to get the input for the question type layer from the SECOND to last hidden layer, as I read this would interfere less with the span prediction. I also inluded the question type prediction in loss calculations. I chose only 4 possible question types: "YES, "NO", "SHORT ANSWER" and "LONG ANSWER".
 
 One con of using this model, is that there is a maximum sequence length of 512. Thus, if the answer is more than 512 words into the context, we could not find it unless we were to fragment the entire context and ask questions on each fragment. 
 
