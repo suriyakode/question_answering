@@ -55,6 +55,8 @@ Writeup :
 
 Hello Cortx team! I wanted to start off by thanking you for this exciting project. It proved to be an incredile learning experience, and on top of that, a ton of fun! As a newcomer to ML libraries, I found myself engrossed in the code and spent a significant number of hours just poking around to try and obtain more satisfying results. Overall, I was very content spending time on this model and would be enthused working at Cortx on similar projects.
 
+ I think the hardest part of the project for me was the data processing, as it took a lot of tests to properly work with the input contexts and also convert the model outputs back to the correct form. The processing took a lot of time for me too, so I even added features like thread parallelism and caching for loading data.
+
 Design : 
 I originally found the BertForQuestionAnswering model and decided to work with that. Unfortunately, I could never load a Bert model onto my GPU for training as it would immeadiately complain about memory usage. I found this odd, as the model shouldn't take up the 16GB of GPU space. Luckily I found the DistilBertForQuestionAnswering model, which boasted similar results to Bert while being light-weight. 
 
