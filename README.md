@@ -11,41 +11,44 @@ Usage:
 
 
 3) download dataset and store samples in ./v1.0
+
+	```
 	gsutil -m cp -R gs://natural_questions/v1.0 <path to your data directory>
-
+	```
 4) simplify training and eval data
-	sudo python3.7 simplify_nq_data.py --data_dir=v1.0/train
-
-	```
-	simplifed train data should be in ./v1.0/simple_train 
-	```
 	
+	```
+	sudo python3.7 simplify_nq_data.py --data_dir=v1.0/train
+	
+	#simplifed train data should be in ./v1.0/simple_train 
 	mkdir v1.0/simple_train
 	cp v1.0-simplified_simplified-nq-train.jsonl.gz v1.0/simple_train
 
 	sudo python3.7 simplify_nq_data.py --data_dir=v1.0/dev/
-
-	```
-	make sure simplified-nq-.jsonl.gz exists in directory v1.0/dev/ 
+	#make sure simplified-nq-.jsonl.gz exists in directory v1.0/dev/ 
 	```
 
 5) perfrom training
+	
 	```
-	 if train_cache exists it will load from there, else it will save there
+	 # if train_cache exists it will load from there, else it will save there
 	 will create <SAVE_MODEL_DIR> 
-	 ```
+	 
 	sudo python3.7 train <SAVE_MODEL_DIR> <train_cache_file>
-
+	```
 6) calculate predictions
+	
 	```
-	if eval_cache exists it will load from there, else it will save there
+	# if eval_cache exists it will load from there, else it will save there
 	 expects <LOAD_MODEL_DIR> to exist 
-	```
+	
 	sudo python3.7 eval <LOAD_MODEL_DIR> <eval_cache_file>
-
+	```
 7) score
+	
+	```
 	sudo python3.7 nq_eval.py --gold_path=v1.0/dev/simplified-nq-.jsonl.gz --predictions_path=predictions.json
-
+	```
 
 Writeup :
 
