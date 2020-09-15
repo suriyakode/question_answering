@@ -1,6 +1,7 @@
 # Model for question answering based on Google's natural questions dataset.
 
-Usage: 
+Usage: I ran this on a fresh Ubuntu16.04 instance with a P5000 GPU through paperspace.
+
 1) clone the repo and make working_dir
 2) install dependencies (off the top of my head)
 	requires python3.7 and pip3.7: https://linuxize.com/post/how-to-install-python-3-7-on-ubuntu-18-04/
