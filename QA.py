@@ -642,7 +642,7 @@ Returns:
 
 def record_prediction(tokenizer, start_scores, end_scores, question_types, uid, tokenized_samples, offset_index):
 
-	# get the best start index, end indec and question type from the score arrays
+	# get the best start index, end index and question type from the score arrays
 	start, end, question_type = get_prediction_span(start_scores, end_scores, question_types)
 
 	# unpack arguments
@@ -842,7 +842,7 @@ def load_eval(i):
 							'candidates' : example['long_answer_candidates'],
 							'context_offset' : offsets[fragment]
 						})
-						# only get first 5 fragments in context
+						# for this version, we only eval on first fragment in contexts (see readme for reasoning) 
 						if fragment >= 0:
 							break
 
@@ -882,7 +882,7 @@ def evaluate():
 	
 	# load the eval data from the example gzip files in parallel
 	else:
-		# pool of 5 threads to run load_eval() on different	
+		# pool of 10 threads to run load_eval() on different	
 		pool = multiprocessing.Pool(10)
 
 		try:
