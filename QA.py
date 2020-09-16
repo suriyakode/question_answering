@@ -294,8 +294,7 @@ def load_train(i):
 						bad_example = False
 
 						if gold['yes_no_answer'] == "YES":
-							clean_start, clean_end = get_clean_span(token_positions, 
-															gold['long_answer']['start_token'], gold['long_answer']['end_token'])
+							clean_start, clean_end = get_clean_span(token_positions, gold['long_answer']['start_token'], gold['long_answer']['end_token'])
 							
 							if clean_start < 0 or clean_start >= len(tokenized_indices) - qlength - 1 or clean_end < 0  or clean_end >= len(tokenized_indices) - qlength - 1:
 								bad_example = True
@@ -313,8 +312,7 @@ def load_train(i):
 
 
 						elif gold['yes_no_answer'] == "NO":
-							clean_start, clean_end = get_clean_span(token_positions, 
-															gold['long_answer']['start_token'], gold['long_answer']['end_token'])
+							clean_start, clean_end = get_clean_span(token_positions, gold['long_answer']['start_token'], gold['long_answer']['end_token'])
 							if clean_start < 0 or clean_start >= len(tokenized_indices) - qlength - 1 or clean_end < 0  or clean_end >= len(tokenized_indices) - qlength - 1:
 								bad_example = True
 								continue
@@ -333,12 +331,10 @@ def load_train(i):
 						# load short answers, if availale
 						elif len(gold['short_answers']) > 0:
 							# start of first short answer
-							clean_start, _ = get_clean_span(token_positions, 
-															gold['short_answers'][0]['start_token'], gold['short_answers'][0]['end_token'])
+							clean_start, _ = get_clean_span(token_positions, gold['short_answers'][0]['start_token'], gold['short_answers'][0]['end_token'])
 							
 							# end of last short answer
-							_, clean_end = get_clean_span(token_positions, 
-															gold['short_answers'][-1]['start_token'], gold['short_answers'][-1]['end_token'])
+							_, clean_end = get_clean_span(token_positions, gold['short_answers'][-1]['start_token'], gold['short_answers'][-1]['end_token'])
 							
 							if clean_start < 0 or clean_start >= len(tokenized_indices) - qlength or clean_end < 0  or clean_end >= len(tokenized_indices) - qlength:
 								bad_example = True
@@ -361,8 +357,7 @@ def load_train(i):
 
 						# load long answer
 						else:
-							clean_start, clean_end = get_clean_span(token_positions, 
-															gold['long_answer']['start_token'], gold['long_answer']['end_token'])
+							clean_start, clean_end = get_clean_span(token_positions, gold['long_answer']['start_token'], gold['long_answer']['end_token'])
 							if clean_start < 0 or clean_start >= len(tokenized_indices) - qlength - 1 or clean_end < 0  or clean_end >= len(tokenized_indices) - qlength - 1:
 								bad_example = True
 								continue
@@ -752,22 +747,6 @@ def record_prediction(tokenizer, start_scores, end_scores, question_types, uid, 
 		"short_answers_score": score.item(),
 		"yes_no_answer": y_n
 	}
-
-
-	'''
-	if y_n == "NONE":
-		text = " ".join(context.split(" ")[long_span[0]:long_span[1]])
-	if qtype < 2:
-		text = y_n
-	print (question + " : ")
-	print (text)
-	print (" ".join(context.split(" ")[short_span[0]:short_span[1]]))
-	print (qtype)
-	print (" ".join(clean_context.split(" ")[clean_start - q_length : clean_end - q_length]))
-	print ("\n")
-	print (predicted_label)
-	print ("\n")
-	'''
 	
 	return predicted_label
 
@@ -946,8 +925,6 @@ def evaluate():
 						results[sample_id[i].item()].append(prediction)
 					else:
 						results[sample_id[i].item()] = [prediction]
-				else:
-					print ("NULL")
 
 
 	# select the best scoring context fragment for each question
